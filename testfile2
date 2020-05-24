@@ -1,0 +1,18 @@
+q0
+qf1 qf2 qf3
+
+q0 a q1
+q0 b q2
+q0 e qf3
+q1 b q5
+q2 e q3
+q2 b q4
+q3 b q4
+q3 a q6
+q4 e q4
+q4 c q6
+q5 c q5
+q5 b q6
+q5 a qf1
+q6 e qf2
+

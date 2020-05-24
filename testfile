@@ -1,0 +1,13 @@
+# Initial state
+p
+
+# Final states
+q
+
+# Commands
+p a s
+p c q
+s c s
+s a d
+s b q
+d e q
