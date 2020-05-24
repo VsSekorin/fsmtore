@@ -8,13 +8,11 @@
 (def fin "_end_")
 (def e "")
 
-(defn splits [str] (str/split str #"\s+"))
-
 (defn command? [line] (not (or (str/blank? line) (str/starts-with? line "#"))))
 
 (defn get-data [filename]
   (with-open [rdr (io/reader filename)]
-    (let [[[s] fins & lines] (map splits (filter command? (line-seq rdr)))]
+    (let [[[s] fins & lines] (map #(str/split % #"\s+") (filter command? (line-seq rdr)))]
       [(set/union #{[start e s]} (reduce #(conj %1 [%2 e fin]) #{} fins) (reduce conj #{} lines))
        (reduce #(conj %1 (first %2) (last %2)) #{} lines)])))
 
