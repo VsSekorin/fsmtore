@@ -10,9 +10,11 @@
 
 (defn command? [line] (not (or (str/blank? line) (str/starts-with? line "#"))))
 
+(defn parse [lines] (->> lines (map str/trim) (filter command?) (map #(str/replace % "->" "")) (map #(str/split % #"\s+"))))
+
 (defn data [filename]
   (with-open [rdr (io/reader filename)]
-    (let [[[s] fins & lines] (->> (line-seq rdr) (filter command?) (map #(str/replace % "->" "")) (map #(str/split % #"\s+")))]
+    (let [[[s] fins & lines] (parse (line-seq rdr))]
       [(union #{[start e s]} (set (map #(vector % e fin) fins)) (set lines))
       (reduce #(conj %1 (first %2) (last %2)) #{} lines)])))
 
@@ -38,4 +40,3 @@
 (defn print-res [commands] (let [[_ res _] (edge commands start fin)] (println res)))
 
 (defn -main [filename & args] (print-res (convert (data filename))))
-
