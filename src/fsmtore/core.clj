@@ -12,8 +12,8 @@
 
 (defn data [filename]
   (with-open [rdr (io/reader filename)]
-    (let [[[s] fins & lines] (map #(str/split % #"\s+") (filter command? (line-seq rdr)))]
-     [(union #{[start e s]} (set (map #(vector % e fin) fins)) (set lines))
+    (let [[[s] fins & lines] (->> (line-seq rdr) (filter command?) (map #(str/replace % "->" "")) (map #(str/split % #"\s+")))]
+      [(union #{[start e s]} (set (map #(vector % e fin) fins)) (set lines))
       (reduce #(conj %1 (first %2) (last %2)) #{} lines)])))
 
 (defn edges [commands state id] (filter #(= state (id %)) commands))
